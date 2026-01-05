@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AEP Web SDK Demo Store</title>
+</head>
+<body>
+  <h1>Welcome to Demo Store</h1>
+  <button id="add-to-cart">Add to cart</button>
+
+  <script>
+    // Basic page-level data layer
+    window.digitalData = {
+      page: {
+        pageName: "home",
+        pageType: "homepage",
+        language: "en-US"
+      },
+      user: {
+        loggedIn: false,
+        customerId: null
+      },
+      ecommerce: {
+        currencyCode: "USD",
+        products: [{
+          id: "SKU-123",
+          name: "Demo Product",
+          category: "Accessories",
+          price: 49.99
+        }]
+      }
+    };
+  </script>
+
+  <script>
+    // Simple event data layer for button clicks
+    document.getElementById("add-to-cart").addEventListener("click", function () {
+      window.digitalData = window.digitalData || {};
+      window.digitalData.events = window.digitalData.events || [];
+      window.digitalData.events.push({
+        eventName: "add_to_cart",
+        timestamp: new Date().toISOString(),
+        product: window.digitalData.ecommerce.products[0]
+      });
+      console.log("digitalData event pushed:", window.digitalData.events.at(-1));
+    });
+  </script>
+</body>
+</html>
